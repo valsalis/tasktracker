@@ -1,0 +1,11 @@
+debug/analogclock.o
+debug/main.o
+debug/mainwindow.o
+debug/plotwindow.o
+debug/qcustomplot.o
+debug/task.o
+debug/moc_analogclock.o
+debug/moc_mainwindow.o
+debug/moc_plotwindow.o
+debug/moc_qcustomplot.o
+debug/moc_task.o
