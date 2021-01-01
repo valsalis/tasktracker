@@ -181,7 +181,7 @@ void MainWindow::buttonExportTasksClicked()
 {
     QString file_name = QFileDialog::getSaveFileName(this,"Save Tasks",".csv");
     QString file_path;
-    qDebug() << "file_path = " << file_path;
+    // qDebug() << "file_path = " << file_path;
     QFile file(file_name);
     file_path = file_name;
     if(!file.open(QFile::WriteOnly | QFile::Text))
@@ -223,10 +223,11 @@ void MainWindow::buttonImportTasksClicked()
             if(lineindex > 0)
             {
                 vectorTask[lineindex-1]->lineEdit->setText(lineToken.at(0));
+                vectorTask[lineindex-1]->timerLabel1->setText(lineToken.at(1));
+                vectorTask[lineindex-1]->timerLabel2->setText(lineToken.at(2));
             }
             lineindex++;
         }
-
         file.close();
     }
 }
@@ -235,8 +236,7 @@ void MainWindow::buttonPlotClicked()
 {
     qDebug() << "got in buttonPlotClicked()";
     PlotWindow* plotWindow = new PlotWindow;
-    plotWindow->show();
-    /*
+
     QString file_name = QFileDialog::getOpenFileName(this,"Open the file");
     QFile file(file_name);
     if (file.open(QFile::ReadOnly))
@@ -246,27 +246,24 @@ void MainWindow::buttonPlotClicked()
 
         while (!in.atEnd())
         {
+            // read one line from textstream(separated by "\n")
+            QString fileLine = in.readLine();
+
+            // parse the read line into separate pieces(tokens) with "," as the delimiter
+            QStringList lineToken = fileLine.split(",", QString::SkipEmptyParts);
             if(lineindex > 0)
             {
-                // read one line from textstream(separated by "\n")
-                QString fileLine = in.readLine();
-
-                // parse the read line into separate pieces(tokens) with "," as the delimiter
-                QStringList lineToken = fileLine.split(",", QString::SkipEmptyParts);
-                vectorTask[lineindex]->lineEdit->setText(lineToken.at(0));
-
-                // load parsed data to model accordingly
-                for (int j = 0; j < lineToken.size(); j++)
-                {
-                    QString value = lineToken.at(j);
-                }
-
+                vectorTask[lineindex-1]->lineEdit->setText(lineToken.at(0));
+                vectorTask[lineindex-1]->timerLabel1->setText(lineToken.at(1));
+                vectorTask[lineindex-1]->timerLabel2->setText(lineToken.at(2));
             }
             lineindex++;
         }
-
         file.close();
-    }*/
+    }
+
+
+    plotWindow->show();
 }
 
 void MainWindow::setCalendarStyle(QCalendarWidget* calendar)

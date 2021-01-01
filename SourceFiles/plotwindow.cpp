@@ -60,4 +60,9 @@ PlotWindow::PlotWindow(QWidget *parent) : QWidget(parent)
 
 }
 
+void PlotWindow::plotRectangle(const QString& start, const QString& end, const QString& taskName)
+{
+
+}
+
 

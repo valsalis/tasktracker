@@ -5,6 +5,7 @@
 #include <QScreen>
 #include <QMessageBox>
 #include <QMetaEnum>
+#include <QVector>
 
 #include <qcustomplot.h>
 
@@ -17,6 +18,9 @@ public:
 
     QCustomPlot* customPlot;
 
+    void plotRectangle(const QString& start, const QString& end, const QString& taskName);
+
+    const int numberPlotPoints = 2000;
 
 };
 
