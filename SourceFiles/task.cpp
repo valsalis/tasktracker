@@ -8,6 +8,7 @@ Task::Task(QWidget* parent) : QFrame(parent)
 {
     this->setIdentifier(tasksNumber);
     tasksNumber++;
+    setCheckBoxState(false);
     setNoFrame(this);
 
     QHBoxLayout* taskLayout = new QHBoxLayout();
@@ -30,7 +31,6 @@ Task::Task(QWidget* parent) : QFrame(parent)
     checkBox = new QCheckBox;
     checkBox->setObjectName(QString::fromUtf8("checkBox"));
     checkBox->setGeometry(QRect(380, 380, 113, 50));
-    //checkBox->setGeometry(QRect(380, 250, 113, 29));
 
     taskLayout->addWidget(checkBox);
     taskLayout->addWidget(lineEdit);
@@ -38,6 +38,8 @@ Task::Task(QWidget* parent) : QFrame(parent)
     taskLayout->addWidget(timerLabel2);
 
     this->setLayout(taskLayout);
+
+    connect(checkBox, SIGNAL(clicked(bool)), this, SLOT(toggleCheckBoxState()));
 }
 
 void Task::setLabelStyle(QLabel* label, QFont* font, QString labelName)
