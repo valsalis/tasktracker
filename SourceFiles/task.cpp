@@ -27,6 +27,12 @@ Task::Task(QWidget* parent) : QFrame(parent)
     lineEdit->installEventFilter(this);
     setLineEditStyle(lineEdit, fontTask, QString::fromUtf8("lineEdit"));
 
+    checkBox = new QCheckBox;
+    checkBox->setObjectName(QString::fromUtf8("checkBox"));
+    checkBox->setGeometry(QRect(380, 380, 113, 50));
+    //checkBox->setGeometry(QRect(380, 250, 113, 29));
+
+    taskLayout->addWidget(checkBox);
     taskLayout->addWidget(lineEdit);
     taskLayout->addWidget(timerLabel1);
     taskLayout->addWidget(timerLabel2);

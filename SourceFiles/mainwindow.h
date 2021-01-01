@@ -16,6 +16,7 @@ public:
 
     void setPushButtonStyle(QPushButton* pushButton);
     void setButtonTabOrder();
+    void setCalendarStyle(QCalendarWidget* calendar);
 
 private slots:
     void buttonStartStopClicked();

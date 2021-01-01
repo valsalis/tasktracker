@@ -11,6 +11,7 @@
 #include <QPalette>
 #include <QMouseEvent>
 #include <QKeyEvent>
+#include <QCheckBox>
 
 /* Before clicking on START/STOP button, the state is notStarted, then after the first click
  * the state changes to started, and the timers appear and the second one increase the time
@@ -34,6 +35,7 @@ public:
     QLabel* timerLabel1;
     QLabel* timerLabel2;
     QLineEdit* lineEdit;
+    QCheckBox* checkBox;
 
     void setLabelStyle(QLabel* label, QFont* font, QString labelName);
     void setLineEditStyle(QLineEdit* lineEdit, QFont* font, QString lineEditName);

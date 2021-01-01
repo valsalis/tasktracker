@@ -18,7 +18,7 @@
 
 MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
 {
-    this->resize(1330, 300);
+    this->resize(1380, 300);
 
     QTimer* timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()),this,SLOT(timerFunction()));
@@ -26,7 +26,8 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
 
     analogClock = new AnalogClock(this);
     calendar = new QCalendarWidget(this);
-    calendar->setFixedSize(400,400);
+    setCalendarStyle(calendar);
+
     layoutClockCalendar = new QVBoxLayout;
     layoutClockCalendar->addWidget(analogClock);
     layoutClockCalendar->addWidget(calendar);
@@ -266,4 +267,36 @@ void MainWindow::buttonPlotClicked()
 
         file.close();
     }*/
+}
+
+void MainWindow::setCalendarStyle(QCalendarWidget* calendar)
+{
+    calendar->setStyleSheet("QTableView{selection-background-color: purple}");
+    // Hack: change calendar title colors
+    QWidget *calendarNavBar = calendar->findChild<QWidget *>("qt_calendar_navigationbar");
+    if (calendarNavBar)
+    {
+        QPalette pal = calendarNavBar->palette();
+        pal.setColor(calendarNavBar->backgroundRole(), QColor(0, 127, 127, 91));
+        pal.setColor(calendarNavBar->foregroundRole(), QColor(127, 0, 127));
+        pal.setColor(QPalette::Text, QColor(127, 0, 127));
+        calendarNavBar->setPalette(pal);
+    }
+
+    QTextCharFormat format;
+    format.setForeground(QColor(127, 0, 127));
+    format.setBackground(QColor(0, 127, 127, 31));
+    format.setFontWeight(QFont::Bold);
+    QTextCharFormat formatWeekendDays;
+    formatWeekendDays.setForeground(QColor(0, 127, 127));
+    formatWeekendDays.setFontWeight(QFont::Bold);
+    calendar->setWeekdayTextFormat(Qt::Saturday, formatWeekendDays);
+    calendar->setWeekdayTextFormat(Qt::Sunday, formatWeekendDays);
+    calendar->setHeaderTextFormat(format);
+    QToolButton *prevMonth = findChild<QToolButton*>("qt_calendar_prevmonth");
+    QToolButton *nextMonth = findChild<QToolButton*>("qt_calendar_nextmonth");
+    prevMonth->setIcon(QIcon(":images/arrow_left.png"));
+    nextMonth->setIcon(QIcon(":images/arrow_right.png"));
+
+    calendar->setFixedSize(420,420);
 }
