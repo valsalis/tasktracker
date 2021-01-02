@@ -192,12 +192,15 @@ void MainWindow::buttonExportTasksClicked()
     QTextStream out(&file);
     QString tasks = "Tasks";
     QString startTime = "Start Time";
-    out << "Tasks" << "," << "Start Time" << "," << "Finish Time" << '\n';
+    out << "Tasks" << "," << "Start Time" << "," << "Finish Time" << "," << "Ticked" << '\n';
     for(int i = 0; i < Task::tasksNumber; ++i)
     {
         if(vectorTask[i]->lineEdit->text() != "")
         {
-            out << vectorTask[i]->lineEdit->text() << "," << vectorTask[i]->timerLabel1->text() << "," << vectorTask[i]->timerLabel2->text() << '\n';
+            out << vectorTask[i]->lineEdit->text() << ","
+                << vectorTask[i]->timerLabel1->text() << ","
+                << vectorTask[i]->timerLabel2->text() << ","
+                << vectorTask[i]->getCheckBoxState() << '\n';
         }
     }
     file.flush();
@@ -225,6 +228,7 @@ void MainWindow::buttonImportTasksClicked()
                 vectorTask[lineindex-1]->lineEdit->setText(lineToken.at(0));
                 vectorTask[lineindex-1]->timerLabel1->setText(lineToken.at(1));
                 vectorTask[lineindex-1]->timerLabel2->setText(lineToken.at(2));
+                //vectorTask[lineindex-1]->setCheckBoxState(QVariant(lineToken.at(3)).toBool());
             }
             lineindex++;
         }
@@ -234,7 +238,7 @@ void MainWindow::buttonImportTasksClicked()
 
 void MainWindow::buttonPlotClicked()
 {
-    qDebug() << "got in buttonPlotClicked()";
+    //qDebug() << "got in buttonPlotClicked()";
     PlotWindow* plotWindow = new PlotWindow;
 
     QString file_name = QFileDialog::getOpenFileName(this,"Open the file");
@@ -253,16 +257,25 @@ void MainWindow::buttonPlotClicked()
             QStringList lineToken = fileLine.split(",", QString::SkipEmptyParts);
             if(lineindex > 0)
             {
-                vectorTask[lineindex-1]->lineEdit->setText(lineToken.at(0));
-                vectorTask[lineindex-1]->timerLabel1->setText(lineToken.at(1));
-                vectorTask[lineindex-1]->timerLabel2->setText(lineToken.at(2));
+                plotWindow->vectorTaskData.push_back(new taskData);
+                plotWindow->vectorTaskData[lineindex-1]->setTaskDescription(lineToken.at(0));
+                plotWindow->vectorTaskData[lineindex-1]->setStartTime(QTime(0,0,0).secsTo(QTime::fromString(lineToken.at(1),"HH:mm:ss")));
+                //qDebug() << "lineToken.at(1) = " << lineToken.at(1);
+                //qDebug() << "QTime::fromString(lineToken.at(1),HH:mm:ss) = " << QTime::fromString(lineToken.at(1),"HH:mm:ss");
+                //qDebug() << "QTime(0,0,0).secsTo(QTime::fromString(lineToken.at(1),HH:mm:ss)) = " << QTime(0,0,0).secsTo(QTime::fromString(lineToken.at(1),"HH:mm:ss"));
+                plotWindow->vectorTaskData[lineindex-1]->setStopTime(QTime(0,0,0).secsTo(QTime::fromString(lineToken.at(2),"HH:mm:ss")));
+                plotWindow->vectorTaskData[lineindex-1]->setTicked(QVariant(lineToken.at(3)).toBool());
+                //qDebug() << plotWindow->vectorTaskData[lineindex-1]->taskDescription;
+                //qDebug() << plotWindow->vectorTaskData[lineindex-1]->startTime;
+                //qDebug() << plotWindow->vectorTaskData[lineindex-1]->stopTime;
+                //qDebug() << plotWindow->vectorTaskData[lineindex-1]->ticked;
             }
             lineindex++;
         }
         file.close();
     }
 
-
+    plotWindow->createPlot();
     plotWindow->show();
 }
 

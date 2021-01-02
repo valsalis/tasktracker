@@ -58,7 +58,7 @@ public:
     void setTaskState(state state) { _taskState = state; }
 
     bool getCheckBoxState() const { return _checkBoxState; }
-    void setCheckBoxState(bool state) {_checkBoxState = state; }
+    void setCheckBoxState(bool state) { _checkBoxState = state; }
 
 public slots:
     void toggleCheckBoxState() { if(_checkBoxState) {setCheckBoxState(false);} else {setCheckBoxState(true);} };
