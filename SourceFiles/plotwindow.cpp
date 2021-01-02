@@ -53,57 +53,34 @@ PlotWindow::PlotWindow(QWidget *parent) : QWidget(parent)
 void PlotWindow::createPlot()
 {
     customPlot = new QCustomPlot(this);
-
     calculateRoundMinMaxTime(vectorTaskData);
-    qDebug() << "timeMin = " << timeMin;
-    qDebug() << "timeMax = " << timeMax;
 
-    double now = QDateTime::currentDateTime().toTime_t();
-    srand(8); // set the random seed, so we always get the same random data
-    // create multiple graphs:
-    /*for (int gi=0; gi<5; ++gi)
+    for(int k = 0; k < vectorTaskData.size(); ++k)
     {
-      customPlot->addGraph();
-      QPen pen;
-      pen.setColor(QColor(0, 0, 255, 200));
-      customPlot->graph()->setLineStyle(QCPGraph::lsLine);
-      customPlot->graph()->setPen(pen);
-      customPlot->graph()->setBrush(QBrush(QColor(255/4.0*gi,160,50,150)));
-      // generate random walk data:
-      QVector<double> time(250), value(250);
-      for (int i=0; i<250; ++i)
-      {
-        time[i] = now + 24*3600*i;
-        if (i == 0)
-          value[i] = (i/50.0+1)*(rand()/(double)RAND_MAX-0.5);
+        customPlot->addGraph();
+        customPlot->graph()->setName(vectorTaskData[k]->taskDescription);
+        QPen pen;
+        pen.setColor(QColor(0, 0, 0, 200));
+        customPlot->graph()->setLineStyle(QCPGraph::lsLine);
+        customPlot->graph()->setPen(pen);
+        if(vectorTaskData[k]->ticked)
+            customPlot->graph()->setBrush(QBrush(QColor(0, 127, 127, 191)));
         else
-          value[i] = qFabs(value[i-1])*(1+0.02/4.0*(4-gi)) + (i/50.0+1)*(rand()/(double)RAND_MAX-0.5);
-      }
-      customPlot->graph()->setData(time, value);
-    }
-    */
-    // Single Plot Example
-    customPlot->addGraph();
-    customPlot->graph()->setName(vectorTaskData[0]->taskDescription);
-    QPen pen;
-    pen.setColor(QColor(0, 0, 0, 200));
-    customPlot->graph()->setLineStyle(QCPGraph::lsLine);
-    customPlot->graph()->setPen(pen);
-    customPlot->graph()->setBrush(QBrush(QColor(255,0,0,255)));
-    // generate random walk data:
-    QVector<double> time(numberPlotPoints), value(numberPlotPoints);
-    for (int i=0; i<numberPlotPoints; ++i)
-    {
-      time[i] = timeMin + i * (timeMax - timeMin) / numberPlotPoints;
-      if (time[i] < vectorTaskData[0]->startTime)
-        value[i] = 0;
-      else if ((time[i] >= vectorTaskData[0]->startTime) && (time[i] < vectorTaskData[0]->stopTime))
-        value[i] = 50;
-      else
-        value[i] = 0;
-    }
-    customPlot->graph()->setData(time, value);
+            customPlot->graph()->setBrush(QBrush(QColor(127, 0, 127)));
 
+        QVector<double> time(numberPlotPoints), value(numberPlotPoints);
+        for (int i=0; i<numberPlotPoints; ++i)
+        {
+          time[i] = timeMin + i * (timeMax - timeMin) / numberPlotPoints;
+          if (time[i] < vectorTaskData[k]->startTime)
+            value[i] = 0;
+          else if ((time[i] >= vectorTaskData[k]->startTime) && (time[i] < vectorTaskData[k]->stopTime))
+            value[i] = 50;
+          else
+            value[i] = 0;
+        }
+        customPlot->graph()->setData(time, value);
+    }
     // configure bottom axis to show time instead of number:
     QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
     customPlot->xAxis->setTicker(timeTicker);
@@ -138,12 +115,6 @@ void PlotWindow::createPlot()
     plotLayout->addWidget(customPlot);
 
     this->setLayout(plotLayout);
-}
-
-
-void PlotWindow::plotRectangle(const QString& start, const QString& end, const QString& taskName)
-{
-
 }
 
 void PlotWindow::calculateRoundMinMaxTime(QVector<taskData*> vectorTaskData)

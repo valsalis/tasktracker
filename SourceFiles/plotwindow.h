@@ -31,7 +31,6 @@ public:
 
     QCustomPlot* customPlot;
 
-    void plotRectangle(const QString& start, const QString& end, const QString& taskName);
     void createPlot();
     void calculateRoundMinMaxTime(QVector<taskData*> vectorTaskData);
 
@@ -40,11 +39,8 @@ public:
     double timeMin = 24*60*60;
     double timeMax = 0;
 
-
-
     QVector<taskData*> vectorTaskData;
-
-
 };
+
 
 #endif // PLOTWINDOW_H
