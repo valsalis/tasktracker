@@ -33,8 +33,12 @@ public:
 
     void plotRectangle(const QString& start, const QString& end, const QString& taskName);
     void createPlot();
+    void calculateRoundMinMaxTime(QVector<taskData*> vectorTaskData);
+
 
     const int numberPlotPoints = 2000;
+    double timeMin = 24*60*60;
+    double timeMax = 0;
 
 
 

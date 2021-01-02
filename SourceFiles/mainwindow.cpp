@@ -266,7 +266,7 @@ void MainWindow::buttonPlotClicked()
                 plotWindow->vectorTaskData[lineindex-1]->setStopTime(QTime(0,0,0).secsTo(QTime::fromString(lineToken.at(2),"HH:mm:ss")));
                 plotWindow->vectorTaskData[lineindex-1]->setTicked(QVariant(lineToken.at(3)).toBool());
                 //qDebug() << plotWindow->vectorTaskData[lineindex-1]->taskDescription;
-                //qDebug() << plotWindow->vectorTaskData[lineindex-1]->startTime;
+                qDebug() << plotWindow->vectorTaskData[lineindex-1]->startTime;
                 //qDebug() << plotWindow->vectorTaskData[lineindex-1]->stopTime;
                 //qDebug() << plotWindow->vectorTaskData[lineindex-1]->ticked;
             }
