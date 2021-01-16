@@ -64,8 +64,14 @@ public:
 
     void openSetTimeWindow();
 
+    SetTimeWindow* setTimeWindow;
+
+    bool changeTimerLabel1 = false;
+    bool changeTimerLabel2 = false;
+
 public slots:
     void toggleCheckBoxState() { if(_checkBoxState) {setCheckBoxState(false);} else {setCheckBoxState(true);} };
+    void changeTime(QTime time);
 
 signals:
     void newSelectedTask();
@@ -74,7 +80,6 @@ private:
     int _taskIdentifier;
     state _taskState = notStarted;
     bool _checkBoxState;
-    SetTimeWindow* setTimeWindow;
 };
 
 #endif // Task_H

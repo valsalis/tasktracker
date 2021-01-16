@@ -1,0 +1,6 @@
+- when selecting a new task, but the time has NOT being stopped on the previous task, make sure the previous task keeps updating the clock.
+- when importing a task.csv, make sure the ticks are loaded as well.
+- add a save button so that it automatically saves to the last imported task.
+- start timer by pressing enter.
+- after export, if plot straight away error. Need to open in excel, save and then plot
+- write 00:00:00 when pressing clear time

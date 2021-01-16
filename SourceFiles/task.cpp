@@ -40,6 +40,7 @@ Task::Task(QWidget* parent) : QFrame(parent)
     this->setLayout(taskLayout);
 
     connect(checkBox, SIGNAL(clicked(bool)), this, SLOT(toggleCheckBoxState()));
+
 }
 
 void Task::setLabelStyle(QLabel* label, QFont* font, QString labelName)
@@ -144,7 +145,26 @@ void Task::setNoFrame(Task* Task)
 void Task::openSetTimeWindow()
 {
     setTimeWindow = new SetTimeWindow(this);
+    connect(setTimeWindow, &SetTimeWindow::newSetTime, this, &Task::changeTime);
     setTimeWindow->show();
+}
+
+void Task::changeTime(QTime time)
+{
+    time = setTimeWindow->newTime;
+    QString time_text = time.toString("hh : mm : ss");
+
+    if(changeTimerLabel1)
+    {
+        timerLabel1->setText(time_text);
+        changeTimerLabel1 = false;
+    }
+
+    if(changeTimerLabel2)
+    {
+        timerLabel2->setText(time_text);
+        changeTimerLabel2 = false;
+    }
 }
 
 bool Task::eventFilter(QObject* o, QEvent* e)
@@ -158,6 +178,19 @@ bool Task::eventFilter(QObject* o, QEvent* e)
     }
 
     if((o == timerLabel1 || o == timerLabel2) && e->type() == QMouseEvent::MouseButtonDblClick)
+    {
+        openSetTimeWindow();
+        if(o == timerLabel1)
+        {
+            changeTimerLabel1 = true;
+        }
+        if(o == timerLabel2)
+        {
+            changeTimerLabel2 = true;
+        }
+    }
+
+    if(o == timerLabel2 && e->type() == QMouseEvent::MouseButtonDblClick)
     {
         openSetTimeWindow();
     }
