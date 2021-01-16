@@ -141,6 +141,12 @@ void Task::setNoFrame(Task* Task)
     Task->setMidLineWidth(0);
 }
 
+void Task::openSetTimeWindow()
+{
+    setTimeWindow = new SetTimeWindow(this);
+    setTimeWindow->show();
+}
+
 bool Task::eventFilter(QObject* o, QEvent* e)
 {
     //qDebug() << "got in Task::eventFilter. taskIdentifier = " << this->getIdentifier();
@@ -149,6 +155,11 @@ bool Task::eventFilter(QObject* o, QEvent* e)
     {
         Task::activeIndex = this->getIdentifier();
         emit newSelectedTask();
+    }
+
+    if((o == timerLabel1 || o == timerLabel2) && e->type() == QMouseEvent::MouseButtonDblClick)
+    {
+        openSetTimeWindow();
     }
 
     if(o == lineEdit && e->type() == QKeyEvent::KeyPress)
