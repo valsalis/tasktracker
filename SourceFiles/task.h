@@ -13,6 +13,8 @@
 #include <QKeyEvent>
 #include <QCheckBox>
 
+#include "settimewindow.h"
+
 /* Before clicking on START/STOP button, the state is notStarted, then after the first click
  * the state changes to started, and the timers appear and the second one increase the time
  * every second. The second click on START/STOP button stops the second timer and brings the
@@ -60,6 +62,8 @@ public:
     bool getCheckBoxState() const { return _checkBoxState; }
     void setCheckBoxState(bool state) { _checkBoxState = state; }
 
+    void openSetTimeWindow();
+
 public slots:
     void toggleCheckBoxState() { if(_checkBoxState) {setCheckBoxState(false);} else {setCheckBoxState(true);} };
 
@@ -70,6 +74,7 @@ private:
     int _taskIdentifier;
     state _taskState = notStarted;
     bool _checkBoxState;
+    SetTimeWindow* setTimeWindow;
 };
 
 #endif // Task_H

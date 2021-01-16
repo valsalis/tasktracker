@@ -13,6 +13,7 @@ HEADERS += \
     mainwindow.h \
     plotwindow.h \
     qcustomplot.h \
+    settimewindow.h \
     task.h
 
 SOURCES += \
@@ -21,6 +22,7 @@ SOURCES += \
         mainwindow.cpp \
         plotwindow.cpp \
         qcustomplot.cpp \
+        settimewindow.cpp \
         task.cpp
 
 # Default rules for deployment.
