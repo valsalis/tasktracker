@@ -73,6 +73,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
         vectorTask.push_back(new Task(this));
         layoutRight->addWidget(vectorTask[i]);
         connect(vectorTask[i], SIGNAL(newSelectedTask()), this, SLOT(setSelectionFrame()));
+        connect(vectorTask[i], SIGNAL(taskStartedByPressingReturnEnter()), this, SLOT(buttonStartStopClicked()));
     }
     // Initialisation to address activeIndex and previousActiveIndex
     vectorTask[0]->setPurpleFrame(vectorTask[0]);
