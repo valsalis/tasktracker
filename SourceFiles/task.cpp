@@ -30,7 +30,8 @@ Task::Task(QWidget* parent) : QFrame(parent)
 
     checkBox = new QCheckBox;
     checkBox->setObjectName(QString::fromUtf8("checkBox"));
-    checkBox->setGeometry(QRect(380, 380, 113, 50));
+    checkBox->setGeometry(QRect(380, 380, 413, 400));
+    checkBox->setStyleSheet("QCheckBox::indicator { width:300px; height: 300px;}");
 
     taskLayout->addWidget(checkBox);
     taskLayout->addWidget(lineEdit);
