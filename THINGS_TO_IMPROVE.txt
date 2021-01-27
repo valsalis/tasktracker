@@ -4,3 +4,5 @@
 - start timer by pressing enter.
 - after export, if plot straight away error. Need to open in excel, save and then plot
 - write 00:00:00 when pressing clear time
+- set the new time on click (from the dialog window) not when we close the dialog window
+- when double clicking on the second time it opens the setTimeWindow twice
