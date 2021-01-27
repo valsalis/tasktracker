@@ -143,8 +143,9 @@ void MainWindow::buttonAddTaskClicked()
 void MainWindow::buttonClearTimeClicked()
 {
     //qDebug() << "got here in buttonClearTimeClicked";
-    vectorTask[Task::activeIndex]->timerLabel1->setText("");
-    vectorTask[Task::activeIndex]->timerLabel2->setText("");
+    QString time_text_zero = QTime(0,0,0,0).toString("hh : mm : ss");
+    vectorTask[Task::activeIndex]->timerLabel1->setText(time_text_zero);
+    vectorTask[Task::activeIndex]->timerLabel2->setText(time_text_zero);
     vectorTask[Task::activeIndex]->setTaskState(notStarted);
 }
 
