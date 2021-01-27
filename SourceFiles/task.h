@@ -75,6 +75,7 @@ public slots:
 
 signals:
     void newSelectedTask();
+    void taskStartedByPressingReturnEnter();
 
 private:
     int _taskIdentifier;

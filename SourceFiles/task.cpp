@@ -196,12 +196,17 @@ bool Task::eventFilter(QObject* o, QEvent* e)
         if(keyEvent->key() == Qt::Key_Tab && Task::activeIndex < (Task::tasksNumber - 1))
         {
             Task::activeIndex++;
+            emit newSelectedTask();
         }
         if(keyEvent->key() == Qt::Key_Backtab && Task::activeIndex > 0  )
         {
             Task::activeIndex--;
+            emit newSelectedTask();
         }
-        emit newSelectedTask();
+        if(keyEvent->key() == Qt::Key_Enter || keyEvent->key() == Qt::Key_Return)
+        {
+            emit taskStartedByPressingReturnEnter();
+        }
     }
     return QObject::eventFilter(o,e);
 }
