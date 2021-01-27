@@ -30,8 +30,7 @@ Task::Task(QWidget* parent) : QFrame(parent)
 
     checkBox = new QCheckBox;
     checkBox->setObjectName(QString::fromUtf8("checkBox"));
-    checkBox->setGeometry(QRect(380, 380, 413, 400));
-    checkBox->setStyleSheet("QCheckBox::indicator { width:300px; height: 300px;}");
+    checkBox->setGeometry(QRect(380, 380, 113, 50));
 
     taskLayout->addWidget(checkBox);
     taskLayout->addWidget(lineEdit);
@@ -189,11 +188,6 @@ bool Task::eventFilter(QObject* o, QEvent* e)
         {
             changeTimerLabel2 = true;
         }
-    }
-
-    if(o == timerLabel2 && e->type() == QMouseEvent::MouseButtonDblClick)
-    {
-        openSetTimeWindow();
     }
 
     if(o == lineEdit && e->type() == QKeyEvent::KeyPress)
